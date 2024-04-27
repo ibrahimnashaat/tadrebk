@@ -1,10 +1,14 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:tadrebk/get_trainings/get%20_trainings_page.dart';
+import 'package:tadrebk/home_screen/about_us_screen/about_us_screen.dart';
+import 'package:tadrebk/home_screen/contact%20_us/contact_us_screen.dart';
+import 'package:tadrebk/home_screen/home_page.dart';
+import 'package:tadrebk/shared/components/components.dart';
 
-import '../shared/colors.dart';
-import '../shared/components.dart';
-import '../shared/fonts.dart';
+import '../shared/styles/colors.dart';
+import '../shared/styles/fonts.dart';
 
 class GetAllTrainings extends StatefulWidget {
   const GetAllTrainings({Key? key}) : super(key: key);
@@ -50,45 +54,78 @@ class _GetAllTrainingsState extends State<GetAllTrainings> {
                         child: Row(
                           children: [
                             Expanded(
-                              child: Text(
-                                'Home',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: mainColor,
-                                  fontFamily: "Poppins",
+                              child: InkWell(
+                                onTap:(){
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => HomePage()), (route) => false,
+                                  );
+                                },
+                                child: Text(
+                                  'Home',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: mainColor,
+                                    fontFamily: "Poppins",
+                                  ),
                                 ),
                               ),
                             ),
                             Expanded(
-                              child: Text(
-                                'Courses',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: mainColor,
-                                  fontFamily: "Poppins",
+                              child: InkWell(
+                                onTap:(){
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => GetTrainings()), (route) => false,
+                                  );
+                                },
+                                child: Text(
+                                  'Training',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: mainColor,
+                                    fontFamily: "Poppins",
+                                  ),
                                 ),
                               ),
                             ),
                             Expanded(
-                              child: Text(
-                                'Contact Us',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: mainColor,
-                                  fontFamily: "Poppins",
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => ContactUsScreen()),
+                                  );
+                                },
+                                child: Text(
+                                  'Contact Us',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: mainColor,
+                                    fontFamily: "Poppins",
+                                  ),
                                 ),
                               ),
                             ),
                             Expanded(
-                              child: Text(
-                                'About Us',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: mainColor,
-                                  fontFamily: "Poppins",
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => AboutUsScreen()),
+                                  );
+                                },
+                                child: Text(
+                                  'About Us',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: mainColor,
+                                    fontFamily: "Poppins",
+                                  ),
                                 ),
                               ),
                             ),
+
                           ],
                         ),
                       ),
@@ -228,70 +265,48 @@ class _GetAllTrainingsState extends State<GetAllTrainings> {
                     right: 100.0,
                   ),
                     child: StreamBuilder<QuerySnapshot>(
-                    stream: FirebaseFirestore.instance
-                        .collection('posts')
-                        .snapshots(),
-                    builder: (context, snapshots) {
-                      return (snapshots.connectionState ==
-                          ConnectionState.waiting)
-                          ? Center(
-                        child: CircularProgressIndicator(),
-                      )
-                          : GridView.builder(
-                            physics: NeverScrollableScrollPhysics(),
+                      stream: FirebaseFirestore.instance.collection('posts').snapshots(),
+                      builder: (context, snapshot) {
+                        if (snapshot.connectionState == ConnectionState.waiting) {
+                          return Center(
+                            child: CircularProgressIndicator(),
+                          );
+                        }
 
-                                                  shrinkWrap: true,
-                                                  gridDelegate:
-                                                  SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount:3,
-                          crossAxisSpacing: 20.0,
-                          mainAxisSpacing: 20.0,
-                           childAspectRatio: 0.88, // Adjust the aspect ratio as needed
+                        List<DocumentSnapshot> documents = snapshot.data!.docs;
 
-                                                  ),
-                                                  itemCount: snapshots.data!.docs.length,
-                                                  itemBuilder: (context, index) {
-                          var data = snapshots.data!.docs[index]
-                              .data() as Map<String, dynamic>;
-                          if (name.isEmpty) {
+                        return GridView.builder(
+                          physics: NeverScrollableScrollPhysics(),
+                          shrinkWrap: true,
+                          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 3,
+                            crossAxisSpacing: 20.0,
+                            mainAxisSpacing: 20.0,
+                            childAspectRatio: 0.88,
+                          ),
+                          itemCount: documents.length,
+                          itemBuilder: (context, index) {
+                            var data = documents[index].data() as Map<String, dynamic>;
+                            String companyName = data['companyName'] ?? 'No Company Name';
+
                             return trainingID(
                               image: data['image'] ?? '',
-                              companyName: data['companyName'],
-                              city: data['city'],
-                              street: data['street'],
-                              trainingSpecialization:
-                              data['trainingSpecialization'],
-                              trainingCost: data['trainingCost'],
-                              trainingDescription:
-                              data['trainingDescription'],
-                              startDate: data['startDate'],
-                              endDate: data['endDate'],
+                              companyName: companyName,
+                              trainingName: data['trainingName'] ?? '',
+                              city: data['city'] ?? '',
+                              street: data['street'] ?? '',
+                              trainingSpecialization: data['trainingSpecialization'] ?? '',
+                              trainingCost: data['trainingCost'] ?? '',
+                              trainingDescription: data['trainingDescription'] ?? '',
+                              startDate: data['startDate'] ?? '',
+                              endDate: data['endDate'] ?? '',
                               context: context,
                             );
-                          }
-                          if (data['companyName']
-                              .toString()
-                              .toLowerCase()
-                              .startsWith(name.toLowerCase())) {
-                            return trainingID(
-                              image: data['image'] ?? '',
-                              companyName: data['companyName'],
-                              city: data['city'],
-                              street: data['street'],
-                              trainingSpecialization:
-                              data['trainingSpecialization'],
-                              trainingCost: data['trainingCost'],
-                              trainingDescription:
-                              data['trainingDescription'],
-                              startDate: data['startDate'],
-                              endDate: data['endDate'],
-                              context: context,
-                            );
-                          }
-                                                  },
-                                                );
-                    },
-                  ),
+                          },
+                        );
+                      },
+                    )
+
                 ),
                 SizedBox(
                   height: 60,

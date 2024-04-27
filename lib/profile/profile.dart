@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:tadrebk/get_trainings/get%20_trainings_page.dart';
+import 'package:tadrebk/home_screen/about_us_screen/about_us_screen.dart';
+import 'package:tadrebk/home_screen/contact%20_us/contact_us_screen.dart';
 import 'package:tadrebk/home_screen/home_page.dart';
 import 'package:tadrebk/profile/cubit.dart';
 import 'package:tadrebk/profile/states.dart';
-import 'package:tadrebk/shared/cach_helper.dart';
-import 'package:tadrebk/shared/components.dart';
-import 'package:tadrebk/shared/fonts.dart';
+import 'package:tadrebk/shared/network/remote/cach_helper.dart';
+import 'package:tadrebk/shared/components/components.dart';
+import 'package:tadrebk/shared/styles/fonts.dart';
 
 import '../login_screen/login.dart';
-import '../shared/colors.dart';
+import '../shared/styles/colors.dart';
 
 class Profile extends StatefulWidget {
   const Profile({super.key});
@@ -69,63 +72,9 @@ class _ProfileState extends State<Profile> {
                         SizedBox(
                           width: MediaQuery.of(context).size.width * 0.2,
                         ),
-                        Expanded(
-                          child: Container(
-                            width: MediaQuery.of(context).size.width * 0.5,
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: InkWell(
-                                    onTap:(){
-                          Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(builder: (context) => HomePage()), (route) => false,
-                          );
-                          },
-                                    child: Text(
-                                      'Home',
-                                      style: TextStyle(
-                                        fontSize: 18,
-                                        color: mainColor,
-                                        fontFamily: "Poppins",
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    'Courses',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: mainColor,
-                                      fontFamily: "Poppins",
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    'Contact Us',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: mainColor,
-                                      fontFamily: "Poppins",
-                                    ),
-                                  ),
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    'About Us',
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      color: mainColor,
-                                      fontFamily: "Poppins",
-                                    ),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+
+                        headerPage(context),
+
                         Row(
                           children: [
                             CircleAvatar(

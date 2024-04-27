@@ -4,9 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:tadrebk/add_training/cubit.dart';
 import 'package:tadrebk/add_training/states.dart';
-import 'package:tadrebk/shared/fonts.dart';
+import 'package:tadrebk/get_trainings/get%20_trainings_page.dart';
+import 'package:tadrebk/home_screen/home_page.dart';
+import 'package:tadrebk/shared/components/components.dart';
+import 'package:tadrebk/shared/styles/fonts.dart';
 
-import '../shared/colors.dart';
+import '../shared/styles/colors.dart';
 
 class Post extends StatefulWidget {
   const Post({Key? key}) : super(key: key);
@@ -18,6 +21,7 @@ class Post extends StatefulWidget {
 class _PostState extends State<Post> {
   var formKey = GlobalKey<FormState>();
   var companyNameController = TextEditingController();
+  var trainingNameController = TextEditingController();
   var cityController = TextEditingController();
   var streetController = TextEditingController();
   var trainingSpecializationController = TextEditingController();
@@ -28,92 +32,21 @@ class _PostState extends State<Post> {
   String? category;
 
   final _formKey = GlobalKey<FormState>();
+
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<PostCubit, PostStatus>(
         listener: (context, state) {},
         builder: (context, state) {
           return Scaffold(
-            body: Container(
+            body: SizedBox(
                 width: MediaQuery.of(context).size.width,
                 height: MediaQuery.of(context).size.height,
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
-                    Container(
-                      width: MediaQuery.of(context).size.width,
-                      height: MediaQuery.of(context).size.height * 0.12,
-                      decoration: BoxDecoration(
-                          color: Theme.of(context).scaffoldBackgroundColor,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.grey.withOpacity(0.5),
-                              spreadRadius: 0.5,
-                              blurRadius: 10,
-                              offset: Offset(0, 4),
-                            ),
-                          ]),
-                      child: Padding(
-                        padding: const EdgeInsets.all(10.0),
-                        child: Row(
-                          children: [
-                            Image.asset('assets/images/img.png'),
-                            SizedBox(
-                              width: MediaQuery.of(context).size.width * 0.2,
-                            ),
-                            Expanded(
-                              child: Container(
-                                width: MediaQuery.of(context).size.width * 0.5,
-                                child: Row(
-                                  children: [
-                                    Expanded(
-                                      child: Text(
-                                        'Home',
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          color: mainColor,
-                                          fontFamily: "Poppins",
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        'Courses',
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          color: mainColor,
-                                          fontFamily: "Poppins",
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        'Contact Us',
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          color: mainColor,
-                                          fontFamily: "Poppins",
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(
-                                      child: Text(
-                                        'About Us',
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          color: mainColor,
-                                          fontFamily: "Poppins",
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
+                    headerPage(context),
+
 
                     //
                     if (state is CreatePostLoadingStates)
@@ -126,7 +59,7 @@ class _PostState extends State<Post> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(left: 60, top: 10),
-                            child: Container(
+                            child: SizedBox(
                               width: MediaQuery.of(context).size.width,
                               height: MediaQuery.of(context).size.height * 0.08,
                               child: Row(
@@ -161,7 +94,8 @@ class _PostState extends State<Post> {
                                 Card(
                                   color: Colors.white,
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     children: [
                                       Padding(
                                         padding: const EdgeInsets.only(
@@ -180,7 +114,8 @@ class _PostState extends State<Post> {
                                             left: 40, right: 40, top: 10),
                                         child: InkWell(
                                           onTap: () {
-                                            PostCubit.get(context).getPostImage();
+                                            PostCubit.get(context)
+                                                .getPostImage();
                                           },
                                           child: Container(
                                             width: MediaQuery.of(context)
@@ -196,7 +131,8 @@ class _PostState extends State<Post> {
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(20),
-                                              color: Colors.grey.withOpacity(0.1),
+                                              color:
+                                                  Colors.grey.withOpacity(0.1),
                                               border: Border.all(
                                                 color: mainColor,
                                                 width: 2,
@@ -210,7 +146,7 @@ class _PostState extends State<Post> {
                                                         AlignmentDirectional
                                                             .topEnd,
                                                     children: [
-                                                      Container(
+                                                      SizedBox(
                                                           width: MediaQuery.of(
                                                                       context)
                                                                   .size
@@ -222,13 +158,15 @@ class _PostState extends State<Post> {
                                                                   .width *
                                                               0.2,
                                                           child: Image.memory(
-                                                            PostCubit.get(context)
+                                                            PostCubit.get(
+                                                                    context)
                                                                 .postImage!,
                                                             fit: BoxFit.cover,
                                                           )),
                                                       IconButton(
                                                           onPressed: () {
-                                                            PostCubit.get(context)
+                                                            PostCubit.get(
+                                                                    context)
                                                                 .removePostImage();
                                                           },
                                                           icon: CircleAvatar(
@@ -236,14 +174,16 @@ class _PostState extends State<Post> {
                                                                 mainColor,
                                                             child: Icon(
                                                               Icons.close,
-                                                              color: Colors.white,
+                                                              color:
+                                                                  Colors.white,
                                                             ),
                                                           )),
                                                     ],
                                                   )
                                                 : Column(
                                                     mainAxisAlignment:
-                                                        MainAxisAlignment.center,
+                                                        MainAxisAlignment
+                                                            .center,
                                                     children: [
                                                       Icon(
                                                         Icons.image,
@@ -269,11 +209,13 @@ class _PostState extends State<Post> {
                                         padding: const EdgeInsets.only(
                                             left: 40, right: 40, top: 10),
                                         child: SizedBox(
-                                          width:
-                                          MediaQuery.of(context).size.width *
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
                                               0.3,
-                                          height:
-                                          MediaQuery.of(context).size.height *
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
                                               0.06,
                                           child: TextFormField(
                                             keyboardType: TextInputType.name,
@@ -286,7 +228,8 @@ class _PostState extends State<Post> {
                                             decoration: InputDecoration(
                                               filled: true,
                                               fillColor: Colors.white,
-                                              hintText: 'Enter your Company Name',
+                                              hintText:
+                                                  'Enter your Company Name',
                                               hintStyle: TextStyle(
                                                   color: Colors.grey,
                                                   fontSize: 12),
@@ -300,7 +243,7 @@ class _PostState extends State<Post> {
                                                 ),
                                               ),
                                               focusedErrorBorder:
-                                              OutlineInputBorder(
+                                                  OutlineInputBorder(
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(10)),
                                                 borderSide: BorderSide(
@@ -308,7 +251,8 @@ class _PostState extends State<Post> {
                                                       .withOpacity(0.5),
                                                 ),
                                               ),
-                                              disabledBorder: OutlineInputBorder(
+                                              disabledBorder:
+                                                  OutlineInputBorder(
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(10)),
                                                 borderSide: BorderSide(
@@ -332,12 +276,80 @@ class _PostState extends State<Post> {
                                         padding: const EdgeInsets.only(
                                             left: 40, right: 40, top: 10),
                                         child: SizedBox(
-                                          width:
-                                              MediaQuery.of(context).size.width *
-                                                  0.3,
-                                          height:
-                                              MediaQuery.of(context).size.height *
-                                                  0.06,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.3,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.06,
+                                          child: TextFormField(
+                                            keyboardType: TextInputType.name,
+                                            controller: trainingNameController,
+                                            validator: (value) {
+                                              if (value!.isEmpty) {
+                                                return 'this field is empty';
+                                              }
+                                            },
+                                            decoration: InputDecoration(
+                                              filled: true,
+                                              fillColor: Colors.white,
+                                              hintText: 'Training Name',
+                                              hintStyle: TextStyle(
+                                                  color: Colors.grey,
+                                                  fontSize: 12),
+                                              focusColor: Colors.white,
+                                              focusedBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10)),
+                                                borderSide: BorderSide(
+                                                  color: Colors.grey
+                                                      .withOpacity(0.5),
+                                                ),
+                                              ),
+                                              focusedErrorBorder:
+                                                  OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10)),
+                                                borderSide: BorderSide(
+                                                  color: Colors.grey
+                                                      .withOpacity(0.5),
+                                                ),
+                                              ),
+                                              disabledBorder:
+                                                  OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10)),
+                                                borderSide: BorderSide(
+                                                  color: Colors.grey
+                                                      .withOpacity(0.5),
+                                                ),
+                                              ),
+                                              enabledBorder: OutlineInputBorder(
+                                                borderRadius: BorderRadius.all(
+                                                    Radius.circular(10)),
+                                                borderSide: BorderSide(
+                                                  color: Colors.grey
+                                                      .withOpacity(0.5),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      Padding(
+                                        padding: const EdgeInsets.only(
+                                            left: 40, right: 40, top: 10),
+                                        child: SizedBox(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.3,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.06,
                                           child: TextFormField(
                                             keyboardType: TextInputType.name,
                                             controller: cityController,
@@ -371,7 +383,8 @@ class _PostState extends State<Post> {
                                                       .withOpacity(0.5),
                                                 ),
                                               ),
-                                              disabledBorder: OutlineInputBorder(
+                                              disabledBorder:
+                                                  OutlineInputBorder(
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(10)),
                                                 borderSide: BorderSide(
@@ -395,12 +408,14 @@ class _PostState extends State<Post> {
                                         padding: const EdgeInsets.only(
                                             left: 40, right: 40, top: 10),
                                         child: SizedBox(
-                                          width:
-                                              MediaQuery.of(context).size.width *
-                                                  0.3,
-                                          height:
-                                              MediaQuery.of(context).size.height *
-                                                  0.06,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.3,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.06,
                                           child: TextFormField(
                                             keyboardType: TextInputType.name,
                                             controller: streetController,
@@ -434,7 +449,8 @@ class _PostState extends State<Post> {
                                                       .withOpacity(0.5),
                                                 ),
                                               ),
-                                              disabledBorder: OutlineInputBorder(
+                                              disabledBorder:
+                                                  OutlineInputBorder(
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(10)),
                                                 borderSide: BorderSide(
@@ -458,12 +474,14 @@ class _PostState extends State<Post> {
                                         padding: const EdgeInsets.only(
                                             left: 40, right: 40, top: 10),
                                         child: SizedBox(
-                                          width:
-                                              MediaQuery.of(context).size.width *
-                                                  0.3,
-                                          height:
-                                              MediaQuery.of(context).size.height *
-                                                  0.06,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.3,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.06,
                                           child: TextFormField(
                                             keyboardType: TextInputType.name,
                                             controller:
@@ -499,7 +517,8 @@ class _PostState extends State<Post> {
                                                       .withOpacity(0.5),
                                                 ),
                                               ),
-                                              disabledBorder: OutlineInputBorder(
+                                              disabledBorder:
+                                                  OutlineInputBorder(
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(10)),
                                                 borderSide: BorderSide(
@@ -523,12 +542,14 @@ class _PostState extends State<Post> {
                                         padding: const EdgeInsets.only(
                                             left: 40, right: 40, top: 10),
                                         child: SizedBox(
-                                          width:
-                                              MediaQuery.of(context).size.width *
-                                                  0.3,
-                                          height:
-                                              MediaQuery.of(context).size.height *
-                                                  0.06,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.3,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.06,
                                           child: TextFormField(
                                             keyboardType: TextInputType.name,
                                             controller: trainingCostController,
@@ -562,7 +583,8 @@ class _PostState extends State<Post> {
                                                       .withOpacity(0.5),
                                                 ),
                                               ),
-                                              disabledBorder: OutlineInputBorder(
+                                              disabledBorder:
+                                                  OutlineInputBorder(
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(10)),
                                                 borderSide: BorderSide(
@@ -586,12 +608,14 @@ class _PostState extends State<Post> {
                                         padding: const EdgeInsets.only(
                                             left: 40, right: 40, top: 10),
                                         child: SizedBox(
-                                          width:
-                                              MediaQuery.of(context).size.width *
-                                                  0.3,
-                                          height:
-                                              MediaQuery.of(context).size.width *
-                                                  0.18,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.3,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.18,
                                           child: TextFormField(
                                             keyboardType: TextInputType.name,
                                             controller:
@@ -627,7 +651,8 @@ class _PostState extends State<Post> {
                                                       .withOpacity(0.5),
                                                 ),
                                               ),
-                                              disabledBorder: OutlineInputBorder(
+                                              disabledBorder:
+                                                  OutlineInputBorder(
                                                 borderRadius: BorderRadius.all(
                                                     Radius.circular(10)),
                                                 borderSide: BorderSide(
@@ -651,12 +676,14 @@ class _PostState extends State<Post> {
                                         padding: const EdgeInsets.only(
                                             top: 10, left: 40, right: 40),
                                         child: SizedBox(
-                                          width:
-                                              MediaQuery.of(context).size.width *
-                                                  0.3,
-                                          height:
-                                              MediaQuery.of(context).size.height *
-                                                  0.06,
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width *
+                                              0.3,
+                                          height: MediaQuery.of(context)
+                                                  .size
+                                                  .height *
+                                              0.06,
                                           child: Row(
                                             children: [
                                               SizedBox(
@@ -671,7 +698,8 @@ class _PostState extends State<Post> {
                                                 child: TextFormField(
                                                   keyboardType:
                                                       TextInputType.number,
-                                                  controller: startDateController,
+                                                  controller:
+                                                      startDateController,
                                                   validator: (value) {
                                                     if (value!.isEmpty) {
                                                       return 'this field is empty';
@@ -812,63 +840,66 @@ class _PostState extends State<Post> {
                                       ),
                                       InkWell(
                                         onTap: () {
-
-                                            if (PostCubit.get(context)
-                                                    .postImage ==
-                                                null) {
-                                              PostCubit.get(context).createPost(
-                                                companyName: companyNameController.text,
-                                                city: cityController.text,
-                                                street: streetController.text,
-                                                trainingSpecialization:
-                                                    trainingSpecializationController
-                                                        .text,
-                                                trainingCost:
-                                                    trainingCostController.text,
-                                                trainingDescription:
-                                                    trainingDescriptionController
-                                                        .text,
-                                                startDate:
-                                                    startDateController.text,
-                                                endDate: endDateController.text,
-                                              );
-                                            } else {
-                                              PostCubit.get(context).uploadPost(
-                                                companyName: companyNameController.text,
-                                                city: cityController.text,
-                                                street: streetController.text,
-                                                trainingSpecialization:
-                                                    trainingSpecializationController
-                                                        .text,
-                                                trainingCost:
-                                                    trainingCostController.text,
-                                                trainingDescription:
-                                                    trainingDescriptionController
-                                                        .text,
-                                                startDate:
-                                                    startDateController.text,
-                                                endDate: endDateController.text,
-                                                context: context,
-                                              );
-
-
-
+                                          if (PostCubit.get(context)
+                                                  .postImage ==
+                                              null) {
+                                            PostCubit.get(context).createPost(
+                                              companyName:
+                                                  companyNameController.text,
+                                              trainingName:
+                                                  trainingNameController.text,
+                                              city: cityController.text,
+                                              street: streetController.text,
+                                              trainingSpecialization:
+                                                  trainingSpecializationController
+                                                      .text,
+                                              trainingCost:
+                                                  trainingCostController.text,
+                                              trainingDescription:
+                                                  trainingDescriptionController
+                                                      .text,
+                                              startDate:
+                                                  startDateController.text,
+                                              endDate: endDateController.text,
+                                            );
+                                          } else {
+                                            PostCubit.get(context).uploadPost(
+                                              companyName:
+                                                  companyNameController.text,
+                                              trainingName:
+                                                  trainingNameController.text,
+                                              city: cityController.text,
+                                              street: streetController.text,
+                                              trainingSpecialization:
+                                                  trainingSpecializationController
+                                                      .text,
+                                              trainingCost:
+                                                  trainingCostController.text,
+                                              trainingDescription:
+                                                  trainingDescriptionController
+                                                      .text,
+                                              startDate:
+                                                  startDateController.text,
+                                              endDate: endDateController.text,
+                                              context: context,
+                                            );
                                           }
                                         },
                                         child: Padding(
                                           padding: const EdgeInsets.only(
-                                            left: 40,
-                                            right: 40,
-                                            top: 20,
-                                            bottom: 30
-                                          ),
+                                              left: 40,
+                                              right: 40,
+                                              top: 20,
+                                              bottom: 30),
                                           child: Container(
-                                            width:
-                                                MediaQuery.of(context).size.width *
-                                                    0.3,
-                                            height:
-                                                MediaQuery.of(context).size.width *
-                                                    0.03,
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.3,
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .width *
+                                                0.03,
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(20),
@@ -908,4 +939,3 @@ class _PostState extends State<Post> {
         });
   }
 }
-

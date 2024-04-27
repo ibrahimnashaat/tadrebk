@@ -6,10 +6,10 @@ import 'package:hexcolor/hexcolor.dart';
 import 'package:tadrebk/home_screen/home_page.dart';
 import 'package:tadrebk/login_screen/cubit.dart';
 import 'package:tadrebk/login_screen/state.dart';
-import 'package:tadrebk/shared/cach_helper.dart';
-import 'package:tadrebk/shared/colors.dart';
-import 'package:tadrebk/shared/components.dart';
-import 'package:tadrebk/shared/fonts.dart';
+import 'package:tadrebk/shared/network/remote/cach_helper.dart';
+import 'package:tadrebk/shared/styles/colors.dart';
+import 'package:tadrebk/shared/components/components.dart';
+import 'package:tadrebk/shared/styles/fonts.dart';
 
 import '../profile/cubit.dart';
 import '../profile/user_model.dart';
@@ -52,8 +52,6 @@ class _LoginState extends State<Login> {
               state: ToastStates.SUCCESS
           );
 
-
-
           cachHelper.saveData(key: 'uId', value: state.uId).then(
                   (value) {
                 ProfileCubit.get(context).getUserData();
@@ -80,10 +78,6 @@ class _LoginState extends State<Login> {
                 });
 
 
-
-
-
-
               }).catchError((error){
 
             print(error.toString());
@@ -91,8 +85,6 @@ class _LoginState extends State<Login> {
           });
 
         }
-
-
 
       },
       builder: (context,state){
@@ -108,7 +100,7 @@ class _LoginState extends State<Login> {
                   child: Opacity(
                     opacity: 0.7,
                     child: Image.asset(
-                      'assets/images/img_15.png',
+                      'assets/images/img_1.png',
                       fit: BoxFit.cover,
                     ),
                   ),
@@ -132,6 +124,7 @@ class _LoginState extends State<Login> {
                           ),
                         ),
                       ),
+
                       Container(
                         width: MediaQuery.of(context).size.width * 0.3,
                         height: MediaQuery.of(context).size.height * 0.76,
@@ -139,6 +132,7 @@ class _LoginState extends State<Login> {
                           color: Colors.white,
                           borderRadius: BorderRadius.circular(20),
                         ),
+
                         child: Column(
                           children: [
                             Container(
@@ -181,8 +175,7 @@ class _LoginState extends State<Login> {
                                             onPressed: () {
 
 
-
-                                                Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomePage()), (route) => false);
+                                              Navigator.pushAndRemoveUntil(context, MaterialPageRoute(builder: (context)=>HomePage()), (route) => false);
 
 
                                             },
@@ -203,6 +196,7 @@ class _LoginState extends State<Login> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+
                                   Text('Enter your Email Address*',
                                     style: TextStyle(
                                         fontSize: 12,
@@ -213,16 +207,19 @@ class _LoginState extends State<Login> {
                                   SizedBox(
                                     height: 4,
                                   ),
+
                                   SizedBox(
                                     height: 45,
                                     child: TextFormField(
                                       keyboardType: TextInputType.emailAddress,
                                       controller: emailController,
-                                      validator: (value) {
+                                      validator: (value)
+                                      {
                                         if (value == null || value.isEmpty) {
                                           return 'this field is empty';
                                         }
                                       },
+
                                       decoration: InputDecoration(
                                         filled: true,
                                         fillColor: Colors.white,
@@ -351,7 +348,6 @@ class _LoginState extends State<Login> {
                                     );
 
                                   }
-
 
 
                                 },

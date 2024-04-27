@@ -9,8 +9,8 @@ import 'package:fluttertoast/fluttertoast_web.dart';
 import 'package:tadrebk/home_screen/home_page.dart';
 import 'package:tadrebk/profile/cubit.dart';
 import 'package:tadrebk/profile/profile.dart';
-import 'package:tadrebk/shared/cach_helper.dart';
-import 'package:tadrebk/shared/constant.dart';
+import 'package:tadrebk/shared/network/remote/cach_helper.dart';
+import 'package:tadrebk/shared/components/constant.dart';
 import 'package:tadrebk/sign_up_screen/cubit.dart';
 import 'package:tadrebk/sign_up_screen/sign_up.dart';
 import 'package:tadrebk/training_categories/training_categories.dart';
@@ -50,16 +50,11 @@ Future<void> main() async {
 
       widget = HomePage();
 
+   }
+  else{
 
-
-  }else{
-
-      widget = Login();
+      widget = HomePage();
   }
-
-
-
-
 
 
   runApp(TadrebkApp(

@@ -2,10 +2,13 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:tadrebk/get_trainings/get_all_trainings.dart';
+import 'package:tadrebk/home_screen/about_us_screen/about_us_screen.dart';
+import 'package:tadrebk/home_screen/contact%20_us/contact_us_screen.dart';
+import 'package:tadrebk/home_screen/home_page.dart';
+import 'package:tadrebk/shared/components/components.dart';
 
-import '../shared/colors.dart';
-import '../shared/components.dart';
-import '../shared/fonts.dart';
+import '../shared/styles/colors.dart';
+import '../shared/styles/fonts.dart';
 
 class GetTrainings extends StatefulWidget {
   const GetTrainings({Key? key}) : super(key: key);
@@ -51,45 +54,78 @@ class _GetTrainingsState extends State<GetTrainings> {
                         child: Row(
                           children: [
                             Expanded(
-                              child: Text(
-                                'Home',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: mainColor,
-                                  fontFamily: "Poppins",
+                              child: InkWell(
+                                onTap:(){
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => HomePage()), (route) => false,
+                                  );
+                                },
+                                child: Text(
+                                  'Home',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: mainColor,
+                                    fontFamily: "Poppins",
+                                  ),
                                 ),
                               ),
                             ),
                             Expanded(
-                              child: Text(
-                                'Courses',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: mainColor,
-                                  fontFamily: "Poppins",
+                              child: InkWell(
+                                onTap:(){
+                                  Navigator.pushAndRemoveUntil(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => GetTrainings()), (route) => false,
+                                  );
+                                },
+                                child: Text(
+                                  'Training',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: mainColor,
+                                    fontFamily: "Poppins",
+                                  ),
                                 ),
                               ),
                             ),
                             Expanded(
-                              child: Text(
-                                'Contact Us',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: mainColor,
-                                  fontFamily: "Poppins",
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => ContactUsScreen()),
+                                  );
+                                },
+                                child: Text(
+                                  'Contact Us',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: mainColor,
+                                    fontFamily: "Poppins",
+                                  ),
                                 ),
                               ),
                             ),
                             Expanded(
-                              child: Text(
-                                'About Us',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  color: mainColor,
-                                  fontFamily: "Poppins",
+                              child: GestureDetector(
+                                onTap: () {
+                                  Navigator.push(
+                                    context,
+                                    MaterialPageRoute(builder: (context) => AboutUsScreen()),
+                                  );
+                                },
+                                child: Text(
+                                  'About Us',
+                                  style: TextStyle(
+                                    fontSize: 18,
+                                    color: mainColor,
+                                    fontFamily: "Poppins",
+                                  ),
                                 ),
                               ),
                             ),
+
                           ],
                         ),
                       ),
@@ -258,6 +294,7 @@ class _GetTrainingsState extends State<GetTrainings> {
                             return trainingID(
                               image: data['image'] ?? '',
                               companyName: data['companyName'],
+                              trainingName: data['companyName'],
                               city: data['city'],
                               street: data['street'],
                               trainingSpecialization:
@@ -277,6 +314,7 @@ class _GetTrainingsState extends State<GetTrainings> {
                             return trainingID(
                               image: data['image'] ?? '',
                               companyName: data['companyName'],
+                              trainingName: data['companyName'],
                               city: data['city'],
                               street: data['street'],
                               trainingSpecialization:
@@ -289,6 +327,7 @@ class _GetTrainingsState extends State<GetTrainings> {
                               context: context,
                             );
                           }
+                          return null;
                         },
                       );
                     },
@@ -315,7 +354,7 @@ class _GetTrainingsState extends State<GetTrainings> {
                     ),
                     child: Center(
                       child: Text(
-                        'Other Courses',
+                        'Other Training',
                         style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.bold,
@@ -337,11 +376,8 @@ class _GetTrainingsState extends State<GetTrainings> {
         ),
       ),
     );
-
-
-  }
+      }
 }
-
 
 Widget category (
     context,

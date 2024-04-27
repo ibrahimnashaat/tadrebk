@@ -29,13 +29,6 @@ class PasswordStates extends RegisterInitialStates {}
 
 
 
-
-
-
-
-
-
-
 ///company
 
 
@@ -49,6 +42,7 @@ class RegisterCreateCompanyErrorStates extends RegisterInitialStates {
   late final String error;
   RegisterCreateCompanyErrorStates(this.error);
 }
+
 
 
 

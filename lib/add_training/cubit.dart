@@ -5,7 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:tadrebk/shared/constant.dart';
+import 'package:tadrebk/shared/components/constant.dart';
 
 import 'model.dart';
 import 'states.dart';
@@ -49,6 +49,7 @@ class PostCubit extends Cubit<PostStatus> {
   void uploadPost({
 
     required companyName,
+    required trainingName,
     required city,
     required street,
     required trainingSpecialization,
@@ -74,6 +75,7 @@ class PostCubit extends Cubit<PostStatus> {
 
           image: downloadURL,
           companyName: companyName,
+          trainingName : trainingName,
           city: city,
           street: street,
           trainingSpecialization: trainingSpecialization,
@@ -112,6 +114,7 @@ class PostCubit extends Cubit<PostStatus> {
 
         String? image,
         required companyName,
+        required trainingName,
         required city,
         required street,
         required trainingSpecialization,
@@ -131,6 +134,7 @@ class PostCubit extends Cubit<PostStatus> {
       uId: uId,
       image: image,
       companyName: companyName,
+      trainingName : trainingName,
       city: city,
       street: street,
       trainingSpecialization: trainingSpecialization,

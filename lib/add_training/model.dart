@@ -5,7 +5,8 @@ class PostModel {
 
 
  String? companyName;
- String? city;
+  String? trainingName;
+  String? city;
  String? street;
  String? trainingSpecialization;
  String? trainingCost;
@@ -17,6 +18,7 @@ class PostModel {
 
   PostModel({
     required this.companyName,
+    required this.trainingName,
     required this.city,
     required this.uId,
     required this.image,
@@ -32,6 +34,7 @@ class PostModel {
   PostModel.fromJson(Map<String ,dynamic > json){
 
     companyName = json['companyName'];
+    companyName = json['trainingName'];
     city = json['city'];
     uId = json['uId'];
     image = json['image'];
@@ -51,6 +54,7 @@ class PostModel {
       'uId' : uId,
       'image':image,
       'companyName':companyName,
+      'trainingName':trainingName,
       'city':city,
       'street':street,
       'trainingSpecialization':trainingSpecialization,

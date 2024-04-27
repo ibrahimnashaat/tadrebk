@@ -2,10 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:tadrebk/add_training/post.dart';
+import 'package:tadrebk/get_trainings/get%20_trainings_page.dart';
+import 'package:tadrebk/home_screen/about_us_screen/about_us_screen.dart';
+import 'package:tadrebk/home_screen/contact%20_us/contact_us_screen.dart';
 import 'package:tadrebk/profile/profile.dart';
-import 'package:tadrebk/shared/cach_helper.dart';
-import 'package:tadrebk/shared/colors.dart';
-import 'package:tadrebk/shared/components.dart';
+import 'package:tadrebk/shared/styles/colors.dart';
+import 'package:tadrebk/shared/components/components.dart';
+import 'package:tadrebk/shared/network/remote/cach_helper.dart';
 import 'package:tadrebk/sign_up_screen/sign_up.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -13,7 +17,7 @@ import 'package:url_launcher/url_launcher.dart';
 import '../login_screen/login.dart';
 import '../profile/cubit.dart';
 import '../profile/states.dart';
-import '../shared/fonts.dart';
+import '../shared/styles/fonts.dart';
 import '../training_categories/training_categories.dart';
 
 class HomePage extends StatefulWidget {
@@ -34,7 +38,6 @@ void initState() {
   isLoggedIn = cachHelper.getData(key: 'type')!=null;
   ProfileCubit.get(context).getUserData();
 
-    // TODO: implement initState
     super.initState();
 
   }
@@ -49,7 +52,6 @@ void initState() {
         final model = ProfileCubit.get(context).userModel;
         var firstName = model?.firstName;
         var lastName = model?.lastName;
-        var email = model?.email;
         var phoneNumber = model?.phoneNumber;
         var image = model?.image;
         var city = model?.city;
@@ -71,7 +73,7 @@ void initState() {
                       decoration: BoxDecoration(
                           color: Theme.of(context).scaffoldBackgroundColor,
                           boxShadow: [
-                            BoxShadow(
+                            const BoxShadow(
                               color: Colors.black,
                               spreadRadius: 2,
                               blurRadius: 10,
@@ -92,25 +94,15 @@ void initState() {
                                 child: Row(
                                   children: [
                                     Expanded(
-                                      child: Text(
-                                        'Home',
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          color: mainColor,
-                                          fontFamily: "Poppins",
-                                        ),
-                                      ),
-                                    ),
-                                    Expanded(
                                       child: InkWell(
-                                        onTap: (){
-                                          // Navigator.pushAndRemoveUntil(
-                                          // context,
-                                          // MaterialPageRoute(builder: (context) => TrainingCategories()), (route) => false,
-                                          // );
+                                        onTap:(){
+                                          Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(builder: (context) => const HomePage()), (route) => false,
+                                          );
                                         },
                                         child: Text(
-                                          'Courses',
+                                          'Home',
                                           style: TextStyle(
                                             fontSize: 18,
                                             color: mainColor,
@@ -120,25 +112,60 @@ void initState() {
                                       ),
                                     ),
                                     Expanded(
-                                      child: Text(
-                                        'Contact Us',
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          color: mainColor,
-                                          fontFamily: "Poppins",
+                                      child: InkWell(
+                                        onTap:(){
+                                          Navigator.pushAndRemoveUntil(
+                                            context,
+                                            MaterialPageRoute(builder: (context) => const GetTrainings()), (route) => false,
+                                          );
+                                        },
+                                        child: Text(
+                                          'Training',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            color: mainColor,
+                                            fontFamily: "Poppins",
+                                          ),
                                         ),
                                       ),
                                     ),
                                     Expanded(
-                                      child: Text(
-                                        'About Us',
-                                        style: TextStyle(
-                                          fontSize: 18,
-                                          color: mainColor,
-                                          fontFamily: "Poppins",
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(builder: (context) => ContactUsScreen()),
+                                          );
+                                        },
+                                        child: Text(
+                                          'Contact Us',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            color: mainColor,
+                                            fontFamily: "Poppins",
+                                          ),
                                         ),
                                       ),
                                     ),
+                                    Expanded(
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            MaterialPageRoute(builder: (context) => AboutUsScreen()),
+                                          );
+                                        },
+                                        child: Text(
+                                          'About Us',
+                                          style: TextStyle(
+                                            fontSize: 18,
+                                            color: mainColor,
+                                            fontFamily: "Poppins",
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+
                                   ],
                                 ),
                               ),
@@ -149,7 +176,7 @@ void initState() {
                                   onTap: () {
                                     Navigator.pushAndRemoveUntil(
                                         context,
-                                        MaterialPageRoute(builder: (context) => Login()),
+                                        MaterialPageRoute(builder: (context) => const Login()),
                                             (route) => false);
                                   },
                                   child: Container(
@@ -173,14 +200,14 @@ void initState() {
                                     ),
                                   ),
                                 ),
-                                SizedBox(
+                                const SizedBox(
                                   width: 10,
                                 ),
                                 InkWell(
                                   onTap: () {
                                     Navigator.pushAndRemoveUntil(
                                         context,
-                                        MaterialPageRoute(builder: (context) => SignUp()),
+                                        MaterialPageRoute(builder: (context) => const SignUp()),
                                             (route) => false);
                                   },
                                   child: Container(
@@ -197,7 +224,7 @@ void initState() {
                                         ],
                                       ),
                                     ),
-                                    child: Center(
+                                    child: const Center(
                                       child: Text(
                                         'Sign Up',
                                         style: TextStyle(
@@ -223,10 +250,10 @@ void initState() {
                                       radius: 45,
                                       backgroundColor: Colors.black12,
                                       backgroundImage:image == null ?
-                                      AssetImage('assets/images/img_23.png') as ImageProvider :
+                                      const AssetImage('assets/images/img_23.png') as ImageProvider :
                                       NetworkImage('$image')
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 6,
                                   ),
                                   Text(
@@ -237,10 +264,10 @@ void initState() {
                                         fontWeight: FontWeight.bold,
                                         fontFamily: mainFont),
                                   ),
-                                  SizedBox(
+                                  const SizedBox(
                                     width: 12,
                                   ),
-                                  Icon(Icons.arrow_drop_down_sharp),
+                                  const Icon(Icons.arrow_drop_down_sharp),
 
                                 ],
                               ),
@@ -269,7 +296,7 @@ void initState() {
                                       width: MediaQuery.of(context).size.width * 0.24,
                                       height:
                                       MediaQuery.of(context).size.height * 0.4,
-                                      child: Column(
+                                      child: const Column(
                                         children: [
                                           Expanded(
                                             flex: 2,
@@ -298,7 +325,7 @@ void initState() {
                                       ),
                                     ),
                                   ),
-                                  Spacer(),
+                                  const Spacer(),
                                   Container(
                                     width: MediaQuery.of(context).size.width * 0.4,
                                     height: MediaQuery.of(context).size.height * 0.22,
@@ -307,59 +334,58 @@ void initState() {
                                       children: [
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
-                                          child: Container(
-                                            width: MediaQuery.of(context).size.width *
-                                                0.08,
-                                            height:
-                                            MediaQuery.of(context).size.height *
-                                                0.2,
-                                            child: Card(
-                                              color: Colors.white,
-                                              child: Column(
-                                                children: [
-                                                  Expanded(
-                                                    flex: 3,
-                                                    child: Padding(
-                                                      padding: const EdgeInsets.only(
-                                                          top: 8),
-                                                      child: Image.asset(
-                                                        'assets/images/img_10.png',
-                                                        width: MediaQuery.of(context)
-                                                            .size
-                                                            .width *
-                                                            0.04,
-                                                        height: MediaQuery.of(context)
-                                                            .size
-                                                            .height *
-                                                            0.1,
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(builder: (context) => const GetTrainings()),
+                                              );
+                                              print('تم النقر على الـ GetTrainings');
+                                              // يمكنك استبدال هذا الإجراء بأي شيء ترغب فيه
+                                            },
+                                            child: Container(
+                                              width: MediaQuery.of(context).size.width * 0.08,
+                                              height: MediaQuery.of(context).size.height * 0.2,
+                                              child: Card(
+                                                color: Colors.white,
+                                                child: Column(
+                                                  children: [
+                                                    Expanded(
+                                                      flex: 3,
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.only(top: 8),
+                                                        child: Image.asset(
+                                                          'assets/images/img_10.png',
+                                                          width: MediaQuery.of(context).size.width * 0.04,
+                                                          height: MediaQuery.of(context).size.height * 0.1,
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                                  Text(
-                                                    '30000+',
-                                                    style: TextStyle(
-                                                      color: mainColor,
-                                                      fontFamily: 'Poppins',
-                                                    ),
-                                                  ),
-                                                  Spacer(),
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(
-                                                        bottom: 6),
-                                                    child: Text(
-                                                      'Training',
+                                                    Text(
+                                                      '30000+',
                                                       style: TextStyle(
+                                                        color: mainColor,
+                                                        fontFamily: 'Poppins',
+                                                      ),
+                                                    ),
+                                                    const Spacer(),
+                                                    const Padding(
+                                                      padding: EdgeInsets.only(bottom: 6),
+                                                      child: Text(
+                                                        'Training',
+                                                        style: TextStyle(
                                                           fontFamily: 'Poppins',
                                                           fontWeight: FontWeight.w600,
-                                                          fontSize: 12),
+                                                          fontSize: 12,
+                                                        ),
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                        Padding(
+                                        ), Padding(
                                           padding: const EdgeInsets.all(8.0),
                                           child: Container(
                                             width: MediaQuery.of(context).size.width *
@@ -389,9 +415,9 @@ void initState() {
                                                       ),
                                                     ),
                                                   ),
-                                                  Spacer(),
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(
+                                                  const Spacer(),
+                                                  const Padding(
+                                                    padding: EdgeInsets.only(
                                                         bottom: 6),
                                                     child: Text(
                                                       'Certificate',
@@ -408,47 +434,47 @@ void initState() {
                                         ),
                                         Padding(
                                           padding: const EdgeInsets.all(8.0),
-                                          child: Container(
-                                            width: MediaQuery.of(context).size.width *
-                                                0.08,
-                                            height:
-                                            MediaQuery.of(context).size.height *
-                                                0.2,
-                                            child: Card(
-                                              color: Colors.white,
-                                              child: Column(
-                                                children: [
-                                                  Expanded(
-                                                    flex: 3,
-                                                    child: Padding(
-                                                      padding: const EdgeInsets.only(
-                                                          top: 8),
-                                                      child: Image.asset(
-                                                        'assets/images/img_7.png',
-                                                        width: MediaQuery.of(context)
-                                                            .size
-                                                            .width *
-                                                            0.04,
-                                                        height: MediaQuery.of(context)
-                                                            .size
-                                                            .height *
-                                                            0.1,
+                                          child: GestureDetector(
+                                            onTap: () {
+
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(builder: (context) => const Post()),
+                                              );
+                                              print('تم النقر على الـ Post');
+                                            },
+                                            child: Container(
+                                              width: MediaQuery.of(context).size.width * 0.08,
+                                              height: MediaQuery.of(context).size.height * 0.2,
+                                              child: Card(
+                                                color: Colors.white,
+                                                child: Column(
+                                                  children: [
+                                                    Expanded(
+                                                      flex: 3,
+                                                      child: Padding(
+                                                        padding: const EdgeInsets.only(top: 8),
+                                                        child: Image.asset(
+                                                          'assets/images/img_7.png',
+                                                          width: MediaQuery.of(context).size.width * 0.04,
+                                                          height: MediaQuery.of(context).size.height * 0.1,
+                                                        ),
                                                       ),
                                                     ),
-                                                  ),
-                                                  Spacer(),
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(
-                                                        bottom: 6),
-                                                    child: Text(
-                                                      'Add Training',
-                                                      style: TextStyle(
+                                                    const Spacer(),
+                                                    const Padding(
+                                                      padding: EdgeInsets.only(bottom: 6),
+                                                      child: Text(
+                                                        'Add Training',
+                                                        style: TextStyle(
                                                           fontFamily: 'Poppins',
                                                           fontWeight: FontWeight.w600,
-                                                          fontSize: 12),
+                                                          fontSize: 12,
+                                                        ),
+                                                      ),
                                                     ),
-                                                  ),
-                                                ],
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                           ),
@@ -459,6 +485,7 @@ void initState() {
                                 ],
                               ),
                             ),
+
                             Container(
                               width: MediaQuery.of(context).size.width * 0.5,
                               height: MediaQuery.of(context).size.height * 0.64,
@@ -535,6 +562,8 @@ void initState() {
                               '"Explore the realm of knowledge and gain new skills through our innovative platform for course delivery. Embark on an exciting learning journey and acquire life-changing'
 
                           ),
+
+
                           introComponents(
                               context,
                               'assets/images/img_19.png',
@@ -554,7 +583,8 @@ void initState() {
                               'Add Training',
                               '"The platform enables companies to provide customized training and effectively track participant progress'
                           ),
-                          SizedBox(width: 4,),
+
+                          const SizedBox(width: 4,),
 
                         ],
                       ),
@@ -587,9 +617,6 @@ class TopClipper extends CustomClipper<Rect> {
 
 
 
-
-
-
 Widget introComponents(
     context,
     image,
@@ -617,7 +644,7 @@ text2
 
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 8,
             ),
             Text(text1,
@@ -629,7 +656,7 @@ text2
               ),
 
             ),
-            SizedBox(
+            const SizedBox(
               height: 16,
             ),
             Expanded(

@@ -2,11 +2,10 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:tadrebk/get_trainings/get_all_trainings.dart';
-
 import '../get_trainings/get _trainings_page.dart';
-import '../shared/colors.dart';
-import '../shared/components.dart';
-import '../shared/fonts.dart';
+import '../shared/styles/colors.dart';
+import 'package:tadrebk/shared/components/components.dart';
+import '../shared/styles/fonts.dart';
 
 class TrainingCategories extends StatefulWidget {
   const TrainingCategories({Key? key}) : super(key: key);
@@ -297,6 +296,7 @@ class _TrainingCategoriesState extends State<TrainingCategories> {
                             return trainingID(
                               image: data['image'] ?? '',
                               companyName: data['companyName'],
+                              trainingName: data['trainingName'],
                               city: data['city'],
                               street: data['street'],
                               trainingSpecialization:
@@ -314,8 +314,9 @@ class _TrainingCategoriesState extends State<TrainingCategories> {
                               .toLowerCase()
                               .startsWith(name.toLowerCase())) {
                             return trainingID(
-                              image: data['image'] ?? '',
+                              image: data['image']?? '' ,
                               companyName: data['companyName'],
+                              trainingName: data['trainingName'],
                               city: data['city'],
                               street: data['street'],
                               trainingSpecialization:
